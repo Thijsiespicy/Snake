@@ -15,8 +15,6 @@ appl = pygame.image.load("src/snake/Assets/apple.png").convert_alpha()
 def menu ():
     pygame.display.set_caption("Menu")
 
-
-    font = pygame.font.Font(None, 100)
     MenuText = pygame.transform.scale((pygame.image.load("src/snake/Assets/logo.png").convert_alpha()), (313*1.5,57*1.5))
     Menurectangle = MenuText.get_rect(center=(300, 200))
     
@@ -164,8 +162,35 @@ def death ():
     running = True
     clock = pygame.time.Clock()
     screen.blit(bg, (0,0))
+
+    you_died_message = pygame.transform.scale((pygame.image.load("src/snake/Assets/youdied.png").convert_alpha()),(457*1.2, 57*1.2))
+    again_image = pygame.image.load("src/snake/Assets/againbutton.png").convert_alpha()
+    again_image_hover = again_image.copy()
+    again_image_hover.fill((200, 200, 200), special_flags=pygame.BLEND_RGB_MULT)
+    menu_image = pygame.image.load("src/snake/Assets/menubutton.png").convert_alpha()
+    menu_image_hover = menu_image.copy()
+    menu_image_hover.fill((200, 200, 200), special_flags=pygame.BLEND_RGB_MULT)
+    
+    again_rect=again_image.get_rect(center=(300, 300))
+    menu_rect=menu_image.get_rect(center=(300, 400))
+    you_died_rect=you_died_message.get_rect(center=(300, 100))
+    screen.blit(you_died_message, you_died_rect)
     
     while running:
+            Mousepos=pygame.mouse.get_pos()
+
+            if menu_rect.collidepoint(Mousepos):
+                screen.blit(menu_image_hover, menu_rect)
+            else:
+                screen.blit(menu_image, menu_rect)
+     
+            if again_rect.collidepoint(Mousepos):
+                screen.blit(again_image_hover, again_rect)
+            else:
+                screen.blit(again_image, again_rect)
+
+
+
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
