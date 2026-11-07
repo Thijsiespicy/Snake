@@ -48,21 +48,20 @@ while running:
         direction = "right"
 
     #rendering apple, and making you be able to collect it
-    screen.blit(appl, (applex + 20, appley + 20))    
+    screen.blit(pygame.transform.scale(appl, (40, 40)), (applex + 10, appley + 10))    
 
     if (applex, appley) == new_head: 
             apple = "no"
-            
+
     if apple == "no":
-        applex = random.randint(0,9)
-        appley = random.randint(0,9)
-        applex = applex * 60 
-        appley = appley * 60 
+        while (applex, appley) in snekpos:
+            applex = random.randint(0,9)*60
+            appley = random.randint(0,9)*60 
         apple = "yes"
 
 
     
-    #2 ticks per second zone
+    #tickspeed zone
     now = pygame.time.get_ticks()
     if now - last > tickspeed: 
 
