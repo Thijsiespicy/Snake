@@ -1,0 +1,9 @@
+pyproject.toml
+readme.md
+src/snake/Snake.py
+src/snake/__init__.py
+src/snake.egg-info/PKG-INFO
+src/snake.egg-info/SOURCES.txt
+src/snake.egg-info/dependency_links.txt
+src/snake.egg-info/requires.txt
+src/snake.egg-info/top_level.txt
