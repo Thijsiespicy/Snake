@@ -6,10 +6,10 @@ pygame.init()
 screen = pygame.display.set_mode((600, 600))
 pygame.display.set_caption("Snake")
 
-bg = pygame.image.load("snake/Assets/BG.png").convert_alpha()
-snekf = pygame.image.load("snake/Assets/snekf.png").convert_alpha()
-snekb = pygame.image.load("snake/Assets/snekb.png").convert_alpha()
-appl = pygame.image.load("snake/Assets/apple.png").convert_alpha()
+bg = pygame.image.load("src/snake/Assets/BG.png").convert_alpha()
+snekf = pygame.image.load("src/snake/Assets/snekf.png").convert_alpha()
+snekb = pygame.image.load("src/snake/Assets/snekb.png").convert_alpha()
+appl = pygame.image.load("src/snake/Assets/apple.png").convert_alpha()
 
 
 def menu ():
@@ -17,10 +17,10 @@ def menu ():
 
 
     font = pygame.font.Font(None, 100)
-    MenuText = pygame.transform.scale((pygame.image.load("snake/Assets/logo.png").convert_alpha()), (313*1.5,57*1.5))
+    MenuText = pygame.transform.scale((pygame.image.load("src/snake/Assets/logo.png").convert_alpha()), (313*1.5,57*1.5))
     Menurectangle = MenuText.get_rect(center=(300, 200))
     
-    play_image=pygame.image.load("snake/Assets/playbutton.png").convert_alpha()
+    play_image=pygame.image.load("src/snake/Assets/playbutton.png").convert_alpha()
     play_image_hover=play_image.copy()
     play_image_hover.fill((200, 200, 200), special_flags=pygame.BLEND_RGB_MULT)
     
@@ -59,7 +59,7 @@ def menu ():
 
 
 def play ():
-
+    
     running = True
     snekpos = [(120,300), (60, 300), (0, 300)]
     new_head = snekpos[0]
@@ -71,8 +71,11 @@ def play ():
     last = pygame.time.get_ticks()
     apple = "yes"
     applex = random.randint(0,9)*60
-    appley = random.randint(0,9)*60
-
+    appley = random.randint(0,9)*60 
+    while (applex, appley) in snekpos:
+        applex = random.randint(0,9)*60
+        appley = random.randint(0,9)*60 
+    size = 3
     while running:
 
         #rendering snake
@@ -102,7 +105,8 @@ def play ():
         #rendering apple, and making you be able to collect it
         screen.blit(pygame.transform.scale(appl, (40, 40)), (applex + 10, appley + 10))    
 
-        if (applex, appley) == new_head: 
+        if (applex, appley) == new_head:
+                size += 1 
                 apple = "no"
 
         if apple == "no":
@@ -131,20 +135,22 @@ def play ():
             newdirection = direction
             new_head = (head_x, head_y)
 
+            #making player not grow when no apple
+            if not (applex, appley) == new_head:
+                snekpos.pop()
             #dying 
             if new_head in snekpos:
-                running = False
+                pygame.display.set_caption("You died")
+                death()
             snekpos.insert(0, new_head)
 
             last = now
             currentdirection = direction
             new_head = snekpos[0]
 
-            #making player not grow when no apple
-            if not (applex, appley) == new_head:
-                snekpos.pop()
             if head_x < 0 or head_x > 540 or head_y < 0 or head_y > 540:
-                running = False
+                pygame.display.set_caption("You died")
+                death()
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -152,8 +158,23 @@ def play ():
         pygame.display.flip()
 
         clock.tick(60)
-
     pygame.quit()
+
+def death ():
+    running = True
+    clock = pygame.time.Clock()
+    screen.blit(bg, (0,0))
+    
+    while running:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    running = False
+            pygame.display.flip()
+        
+            clock.tick(60)
+    pygame.quit()
+        
+
 
 if __name__ =="__main__":
     menu()
