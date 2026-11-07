@@ -14,10 +14,10 @@ appl = pygame.image.load("src/snake/Assets/apple.png").convert_alpha()
 
 def menu ():
     pygame.display.set_caption("Menu")
-
+    screen.blit(bg, (0,0))
     MenuText = pygame.transform.scale((pygame.image.load("src/snake/Assets/logo.png").convert_alpha()), (313*1.5,57*1.5))
-    Menurectangle = MenuText.get_rect(center=(300, 200))
-    
+    Menurectangle = MenuText.get_rect(center=(300, 100))
+    running = True
     play_image=pygame.image.load("src/snake/Assets/playbutton.png").convert_alpha()
     play_image_hover=play_image.copy()
     play_image_hover.fill((200, 200, 200), special_flags=pygame.BLEND_RGB_MULT)
@@ -26,7 +26,7 @@ def menu ():
     
     clock = pygame.time.Clock()
 
-    while True:
+    while running:
         Mousepos = pygame.mouse.get_pos()
 
         screen.blit(bg, (0,0))
@@ -42,7 +42,6 @@ def menu ():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-                return
             
            
             if event.type == pygame.MOUSEBUTTONDOWN:
@@ -194,6 +193,19 @@ def death ():
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
+
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if event.button == 1:
+                        if again_rect.collidepoint(event.pos):
+                            play()          
+                            return
+
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if event.button == 1:
+                        if menu_rect.collidepoint(event.pos):
+                            menu()
+                            return
+                        
             pygame.display.flip()
         
             clock.tick(60)
