@@ -47,7 +47,8 @@ while running:
             head_x += 60
 
         new_head = (head_x, head_y)
-
+        if new_head in snekpos:
+            running = False
         snekpos.insert(0, new_head)
 
         last = now
@@ -68,6 +69,8 @@ while running:
             snekpos.pop()
         if head_x < 0 or head_x > 540 or head_y < 0 or head_y > 540:
             running = False
+
+
     
     screen.blit(appl, (applex + 20, appley + 20))
 
