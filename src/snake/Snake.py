@@ -11,7 +11,52 @@ snekf = pygame.image.load("src/snake/Assets/snekf.png").convert_alpha()
 snekb = pygame.image.load("src/snake/Assets/snekb.png").convert_alpha()
 appl = pygame.image.load("src/snake/Assets/apple.png").convert_alpha()
 
+global size
+global number_sheet 
+global spacingx
+global spacingy
+global numbers
+global columns
 
+number_sheet = pygame.image.load("src/snake/Assets/numbersheet.png").convert_alpha()
+
+numbers = []
+
+columns = []
+
+for x in range(number_sheet.get_width()):
+    visible = False
+
+    for y in range(number_sheet.get_height()):
+        if number_sheet.get_at((x, y)).a > 0:
+            visible = True
+            break
+    columns.append(visible)
+
+start = None
+
+for x, visible in enumerate(columns + [False]):
+    if visible and start is None:
+        start = x
+    elif not visible and start is not None:
+        rect = pygame.Rect(start, 0, x - start, number_sheet.get_height())
+        numbers.append(number_sheet.subsurface(rect).copy())
+        start = None
+
+
+
+
+def draw_score(size, x, y):
+    size_text = str(size)
+
+    for digit in size_text:
+        image = numbers[int(digit)]
+
+        screen.blit(image, (x, y))
+
+        x += image.get_width() + 5
+    
+    
 def menu ():
     pygame.display.set_caption("Menu")
     screen.blit(bg, (0,0))
@@ -21,6 +66,9 @@ def menu ():
     play_image=pygame.image.load("src/snake/Assets/playbutton.png").convert_alpha()
     play_image_hover=play_image.copy()
     play_image_hover.fill((200, 200, 200), special_flags=pygame.BLEND_RGB_MULT)
+
+
+
     
     play_rect=play_image.get_rect(center=(300,400))
     
@@ -72,6 +120,7 @@ def play ():
     while (applex, appley) in snekpos:
         applex = random.randint(0,9)*60
         appley = random.randint(0,9)*60 
+    global size 
     size = 3
     while running:
 
@@ -162,6 +211,7 @@ def death ():
     clock = pygame.time.Clock()
     screen.blit(bg, (0,0))
 
+    size_text = pygame.image.load("src/snake/Assets/size.png").convert_alpha()
     you_died_message = pygame.transform.scale((pygame.image.load("src/snake/Assets/youdied.png").convert_alpha()),(457*1.2, 57*1.2))
     again_image = pygame.image.load("src/snake/Assets/againbutton.png").convert_alpha()
     again_image_hover = again_image.copy()
@@ -169,13 +219,16 @@ def death ():
     menu_image = pygame.image.load("src/snake/Assets/menubutton.png").convert_alpha()
     menu_image_hover = menu_image.copy()
     menu_image_hover.fill((200, 200, 200), special_flags=pygame.BLEND_RGB_MULT)
-    
-    again_rect=again_image.get_rect(center=(300, 300))
+
+    size_rect=size_text.get_rect(center=(300, 200))
+    again_rect=again_image.get_rect(center=(300, 500))
     menu_rect=menu_image.get_rect(center=(300, 400))
     you_died_rect=you_died_message.get_rect(center=(300, 100))
     screen.blit(you_died_message, you_died_rect)
     
     while running:
+            screen.blit(size_text, size_rect)
+
             Mousepos=pygame.mouse.get_pos()
 
             if menu_rect.collidepoint(Mousepos):
@@ -206,8 +259,9 @@ def death ():
                             menu()
                             return
                         
+            draw_score(size, 448, 170)
+            
             pygame.display.flip()
-        
             clock.tick(60)
     pygame.quit()
         
