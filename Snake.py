@@ -1,10 +1,12 @@
 import pygame
+import random 
 
 pygame.init()
 
 screen = pygame.display.set_mode((600, 600))
 
 snek = pygame.image.load("Assets/snek.png").convert()
+appl = pygame.image.load("Assets/apple.png").convert()
 
 running = True
 snekpos = [(120,300), (60, 300), (0, 300)]
@@ -12,7 +14,7 @@ clock = pygame.time.Clock()
 speed = 500
 direction = "right"
 last = pygame.time.get_ticks()
-
+apple = "no"
 
 while running:
     screen.fill((46, 16, 16))
@@ -48,6 +50,17 @@ while running:
         last = now
         currentdirection = direction
     head_x, head_y = snekpos[0]
+
+    if apple == "no":
+       applex = random.randint(0,10)
+       appley = random.randint(0,10)
+       applex = applex * 60 + 30
+       appley = appley * 60 + 30
+       apple = "yes"
+
+
+
+    screen.blit(appl, (applex, appley))
 
     if head_x < 0 or head_x > 540 or head_y < 0 or head_y > 540:
         running = False
