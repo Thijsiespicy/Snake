@@ -13,8 +13,11 @@ snekpos = [(120,300), (60, 300), (0, 300)]
 clock = pygame.time.Clock()
 speed = 500
 direction = "right"
+currentdirection = "right"
 last = pygame.time.get_ticks()
-apple = "no"
+apple = "yes"
+applex = random.randint(0,9)*60
+appley = random.randint(0,9)*60
 
 while running:
     screen.fill((46, 16, 16))
@@ -46,24 +49,28 @@ while running:
         new_head = (head_x, head_y)
 
         snekpos.insert(0, new_head)
-        snekpos.pop()
+
         last = now
         currentdirection = direction
-    head_x, head_y = snekpos[0]
 
-    if apple == "no":
-       applex = random.randint(0,10)
-       appley = random.randint(0,10)
-       applex = applex * 60 + 20
-       appley = appley * 60 + 20
-       apple = "yes"
+        new_head = snekpos[0]
 
+        if apple == "no":
+            applex = random.randint(0,9)
+            appley = random.randint(0,9)
+            applex = applex * 60 
+            appley = appley * 60 
+            apple = "yes"
 
+        if (applex, appley) == new_head: 
+            apple = "no"
+        else:
+            snekpos.pop()
+        if head_x < 0 or head_x > 540 or head_y < 0 or head_y > 540:
+            running = False
+    
+    screen.blit(appl, (applex + 20, appley + 20))
 
-    screen.blit(appl, (applex, appley))
-
-    if head_x < 0 or head_x > 540 or head_y < 0 or head_y > 540:
-        running = False
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
