@@ -54,8 +54,8 @@ while running:
     if apple == "no":
        applex = random.randint(0,10)
        appley = random.randint(0,10)
-       applex = applex * 60 + 10
-       appley = appley * 60 + 10
+       applex = applex * 60 + 20
+       appley = appley * 60 + 20
        apple = "yes"
 
 
