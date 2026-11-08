@@ -8,3 +8,5 @@ I also added apples, if you eat an apple, you'll grow one tile longer. If you to
 You need the pygame-ce library; `pip install pygame-ce`
 
 You can download the source code, and you can play it on itch; [itch.io/](https://thijsiespicy.itch.io/thijsiespicys-snake)
+
+This was my first pygame and game ever, and I really enjoyed it, and I'm looking forward to make more games!
