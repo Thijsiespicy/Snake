@@ -10,3 +10,4 @@ You need the pygame-ce library; `pip install pygame-ce`
 You can download the source code, and you can play it on itch; [itch.io/](https://thijsiespicy.itch.io/thijsiespicys-snake)
 
 This was my first pygame and game ever, and I really enjoyed it, and I'm looking forward to make more games!
+<img width="1896" height="1030" alt="image" src="https://github.com/user-attachments/assets/a98062aa-2eae-455f-afc0-976c609f6dc2" />
