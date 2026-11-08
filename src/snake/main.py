@@ -1,15 +1,16 @@
 import pygame
 import random 
+import asyncio
 
 pygame.init()
 
 screen = pygame.display.set_mode((600, 600))
 pygame.display.set_caption("Snake")
 
-bg = pygame.image.load("src/snake/Assets/BG.png").convert_alpha()
-snekf = pygame.image.load("src/snake/Assets/snekf.png").convert_alpha()
-snekb = pygame.image.load("src/snake/Assets/snekb.png").convert_alpha()
-appl = pygame.image.load("src/snake/Assets/apple.png").convert_alpha()
+bg = pygame.image.load("Assets/BG.png").convert_alpha()
+snekf = pygame.image.load("Assets/snekf.png").convert_alpha()
+snekb = pygame.image.load("Assets/snekb.png").convert_alpha()
+appl = pygame.image.load("Assets/apple.png").convert_alpha()
 
 global size
 global number_sheet 
@@ -18,7 +19,7 @@ global spacingy
 global numbers
 global columns
 
-number_sheet = pygame.image.load("src/snake/Assets/numbersheet.png").convert_alpha()
+number_sheet = pygame.image.load("Assets/numbersheet.png").convert_alpha()
 
 numbers = []
 
@@ -57,13 +58,13 @@ def draw_score(size, x, y):
         x += image.get_width() + 5
     
     
-def menu ():
+async def menu ():
     pygame.display.set_caption("Menu")
     screen.blit(bg, (0,0))
-    MenuText = pygame.transform.scale((pygame.image.load("src/snake/Assets/logo.png").convert_alpha()), (313*1.5,57*1.5))
+    MenuText = pygame.transform.scale((pygame.image.load("Assets/logo.png").convert_alpha()), (313*1.5,57*1.5))
     Menurectangle = MenuText.get_rect(center=(300, 100))
     running = True
-    play_image=pygame.image.load("src/snake/Assets/playbutton.png").convert_alpha()
+    play_image=pygame.image.load("Assets/playbutton.png").convert_alpha()
     play_image_hover=play_image.copy()
     play_image_hover.fill((200, 200, 200), special_flags=pygame.BLEND_RGB_MULT)
 
@@ -96,14 +97,15 @@ def menu ():
                 if event.button == 1:
                     if play_rect.collidepoint(event.pos):
                         pygame.display.set_caption("Snake")
-                        play()
+                        await play()
                         return
                     
         pygame.display.flip()
         clock.tick(60)
+        await asyncio.sleep(0)
 
 
-def play ():
+async def play ():
     
     running = True
     snekpos = [(120,300), (60, 300), (0, 300)]
@@ -187,7 +189,7 @@ def play ():
             #dying 
             if new_head in snekpos:
                 pygame.display.set_caption("You died")
-                death()
+                await death()
             snekpos.insert(0, new_head)
 
             last = now
@@ -196,7 +198,7 @@ def play ():
 
             if head_x < 0 or head_x > 540 or head_y < 0 or head_y > 540:
                 pygame.display.set_caption("You died")
-                death()
+                await death()
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -204,19 +206,20 @@ def play ():
         pygame.display.flip()
 
         clock.tick(60)
+        await asyncio.sleep(0)
     pygame.quit()
 
-def death ():
+async def death ():
     running = True
     clock = pygame.time.Clock()
     screen.blit(bg, (0,0))
 
-    size_text = pygame.image.load("src/snake/Assets/size.png").convert_alpha()
-    you_died_message = pygame.transform.scale((pygame.image.load("src/snake/Assets/youdied.png").convert_alpha()),(457*1.2, 57*1.2))
-    again_image = pygame.image.load("src/snake/Assets/againbutton.png").convert_alpha()
+    size_text = pygame.image.load("Assets/size.png").convert_alpha()
+    you_died_message = pygame.transform.scale((pygame.image.load("Assets/youdied.png").convert_alpha()),(457*1.2, 57*1.2))
+    again_image = pygame.image.load("Assets/againbutton.png").convert_alpha()
     again_image_hover = again_image.copy()
     again_image_hover.fill((200, 200, 200), special_flags=pygame.BLEND_RGB_MULT)
-    menu_image = pygame.image.load("src/snake/Assets/menubutton.png").convert_alpha()
+    menu_image = pygame.image.load("Assets/menubutton.png").convert_alpha()
     menu_image_hover = menu_image.copy()
     menu_image_hover.fill((200, 200, 200), special_flags=pygame.BLEND_RGB_MULT)
 
@@ -250,22 +253,23 @@ def death ():
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if event.button == 1:
                         if again_rect.collidepoint(event.pos):
-                            play()          
+                            await play()          
                             return
 
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if event.button == 1:
                         if menu_rect.collidepoint(event.pos):
-                            menu()
+                            await menu()
                             return
                         
             draw_score(size, 448, 170)
             
             pygame.display.flip()
             clock.tick(60)
+            await asyncio.sleep(0)
     pygame.quit()
         
 
 
 if __name__ =="__main__":
-    menu()
+    asyncio.run(menu())
