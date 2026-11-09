@@ -1,13 +1,33 @@
-This is my first time doing python. I'm trying to make snake. I used a video tutorial for the basics, I also used pygame.org/docs.
-At some point I got big bugs, and then I used ChatGPT to help me solve it, and explain what was happening and how to fix it.
-I don't want to use a lot of AI, but it helped me learn in this case.
+-(Thijsiespicy's) Snake
 
-The functionality: You have a snake, with the body data in a list. It renders the snake every frame of the 60 fps, and changes also gives it a head which rotates. 
-I also added apples, if you eat an apple, you'll grow one tile longer. If you touch your own body, or the border, the game will close
+A remake of snake, with homemade assets. 
 
-You need the pygame-ce library; `pip install pygame-ce`
+-Description
 
-You can download the source code, and you can play it on itch; [itch.io/](https://thijsiespicy.itch.io/thijsiespicys-snake)
+I made a snake game. Every gametick (500ms) your snake will move 1 square. The head will also rotate with the movements of the snake. If you grab an apple, you'll grow one tile. You start with 3 tiles. I made a main menu, and a death screen. The buttons on there get darker if you hover. If you die, the deathscreen will show your length. Every asset is made by me. 
 
-This was my first pygame and game ever, and I really enjoyed it, and I'm looking forward to make more games!
-<img width="1896" height="1030" alt="image" src="https://github.com/user-attachments/assets/a98062aa-2eae-455f-afc0-976c609f6dc2" />
+-Screenshots
+
+<img width="1896" height="1030" alt="afbeelding" src="https://github.com/user-attachments/assets/0a1b37ac-2435-44cd-8f3b-78e6bb11673b" />
+<img width="600" height="600" alt="afbeelding" src="https://github.com/user-attachments/assets/ae046045-0e89-46ab-8c84-79f2a33acd6b" />
+<img width="600" height="600" alt="afbeelding" src="https://github.com/user-attachments/assets/2245b208-cae0-4348-b469-8e9a775d03e3" />
+
+-Dependencies
+
+Youe need pygame-ce you can install it with this code: `pip install pygame-ce`
+Every OS works
+
+-Installing
+
+You can download the program via the github. It's in src/snake. You need to open the snake folder via any code editor, to make sure everything works. 
+
+-Executing program
+
+You download the folder, snake folfder (src/snake) and open it via your code editor, and then if you press run everything should work
+
+-Help
+If it gives an error the assets can't be found, you probably opened the wrong folder
+
+-License
+
+This project is licensed under the Thijsiespicy License - see the LICENSE.md file for details
